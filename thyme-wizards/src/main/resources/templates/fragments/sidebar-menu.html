@@ -40,8 +40,8 @@
 					<!-- tag::mobile-nav[] -->
 					<nav class="px-2">
                     	<a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')"></a>
-                    	<a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Team', menuItem='team', icon='users')"></a>
-                    	<a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Projects', menuItem='projects', icon='folder')"></a>
+                    	<a th:replace="fragments/sidebar-buttons :: mobile-button(link=@{/users}, title='Users', menuItem='users', icon='users')"></a>
+                    	<a th:replace="fragments/sidebar-buttons :: mobile-button(link=@{/teams}, title='Teams', menuItem='teams', icon='user-group')"></a>
                     	<a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')"></a>
                     	<a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Documents', menuItem='documents', icon='inbox')"></a>
                     	<a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Reports', menuItem='reports', icon='chart-bar')"></a>
@@ -65,8 +65,8 @@
 					<!-- tag::desktop-nav[] -->
 					<nav class="flex-1 px-2 bg-white">
   						<a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')"></a>
-  						<a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Team', menuItem='team', icon='users')"></a>
-  						<a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Projects', menuItem='projects', icon='folder')"></a>
+  						<a th:replace="fragments/sidebar-buttons :: desktop-button(link=@{/users}, title='Users', menuItem='users', icon='users')"></a>
+  						<a th:replace="fragments/sidebar-buttons :: desktop-button(link=@{/teams}, title='Teams', menuItem='teams', icon='user-group')"></a>
   						<a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')"></a>
   						<a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Documents', menuItem='documents', icon='inbox')"></a>
   						<a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Reports', menuItem='reports', icon='chart-bar')"></a>
