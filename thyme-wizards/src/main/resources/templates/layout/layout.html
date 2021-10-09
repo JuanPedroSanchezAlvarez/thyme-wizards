@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE" th:text="#{app.title}"></title>
+<link rel="shortcut icon" th:href="@{/img/favicon.svg}" />
+<link th:rel="stylesheet" th:href="@{/tailwind/tailwind.min.css}" />
+<link th:rel="stylesheet" th:href="@{/inter/inter.css}" />
+<script defer th:src="@{/alpine/alpine.js}"></script>
+</head>
+<body>
+
+	<div class="h-screen flex overflow-hidden bg-gray-100" x-data="sidebarMenu()" @keydown.window.escape="closeSidebar">
+
+		<!-- Off-canvas menu for mobile -->
+  		<div th:replace="fragments/sidebar-menu :: mobile"></div>
+
+  		<!-- Static sidebar for desktop -->
+  		<div th:replace="fragments/sidebar-menu :: desktop"></div>
+
+		<div class="flex flex-col w-0 flex-1 overflow-hidden">
+
+			<!-- Top navbar menu -->
+			<div th:replace="fragments/top-menu :: menu"></div>
+
+			<main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
+				<div layout:fragment="page-content"></div>
+			</main>
+
+		</div>
+
+	</div>
+
+	<script th:src="@{/custom/js/sidebar-menu.js}"></script>
+	<script th:src="@{/custom/js/user-popup-menu.js}"></script>
+	<th:block layout:fragment="page-scripts"></th:block>
+
+</body>
+</html>
