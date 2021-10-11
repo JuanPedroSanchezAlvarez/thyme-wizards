@@ -1,4 +1,4 @@
-package com.thymewizards;
+package com.thymewizards.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
