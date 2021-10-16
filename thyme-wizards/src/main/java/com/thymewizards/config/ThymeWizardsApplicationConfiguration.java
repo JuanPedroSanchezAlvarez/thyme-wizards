@@ -8,7 +8,9 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 @Configuration
 public class ThymeWizardsApplicationConfiguration {
 
-	// We instruct Thymeleaf to search for fragments in the svg directory using the .svg suffix (as opposed to the default .html suffix).
+    /**
+     * Instruct Thymeleaf to search for fragments in the svg directory using the .svg suffix (as opposed to the default .html suffix)
+     */
 	@Bean
 	public ITemplateResolver svgTemplateResolver() {
 		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
