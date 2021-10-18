@@ -12,7 +12,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     /**
-     * Implements the 'lang' query param in urls for internationalization
+     * Implement the 'lang' query param in urls for internationalization
      */
 	@Bean
 	public LocaleResolver localeResolver() {
