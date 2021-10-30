@@ -46,4 +46,9 @@ public class UserDTO extends BaseDTO {
 	@Pattern(regexp="(^$|[0-9]{9})")
 	private String phoneNumber;
 
+
+	public String getFullName() {
+		return String.format("%s %s", firstName, lastName);
+	}
+
 }

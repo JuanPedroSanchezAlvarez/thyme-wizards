@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<th th:fragment="header(title)" class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" th:text="${title}"></th>
+
+	<td th:fragment="data(contents)" th:with="primary=${primary?: false}" class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500" th:classappend="${primary?'font-medium text-gray-900':''}" th:text="${contents}"></td>
+	<td th:fragment="dataWithLink(linkText, linkUrl)" class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+  		<a th:href="${linkUrl}" th:text="${linkText}" class="text-indigo-600 hover:text-indigo-900"></a>
+  	</td>
+
+</body>
+</html>

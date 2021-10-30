@@ -29,8 +29,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		for (int i = 0; i < 20; i++) {
-			UserDTO fakeUser = createFakeUser();
-			userService.save(fakeUser);
+			userService.save(createFakeUser());
 		}
 	}
 
@@ -42,7 +41,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 		fakeUser.setGender(faker.bool().bool() ? Gender.MALE : Gender.FEMALE);
 		fakeUser.setBirthday(LocalDate.ofInstant(faker.date().birthday(18, 65).toInstant(), ZoneId.systemDefault()));
 		fakeUser.setEmail(faker.internet().emailAddress());
-		fakeUser.setPhoneNumber(faker.phoneNumber().cellPhone());
+		fakeUser.setPhoneNumber(String.valueOf(faker.number().numberBetween(100000000, 999999999)));
 		return fakeUser;
 	}
 
