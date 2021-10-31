@@ -1,5 +1,7 @@
 package com.thymewizards.controller;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +26,9 @@ public class UserController {
 	}
 
 	@GetMapping(path = {"", "/"})
-	public String index(Model model) {
+	public String index(Model model, @SortDefault.SortDefaults({@SortDefault("firstName"), @SortDefault("lastName")}) Pageable pageable) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
-		model.addAttribute("listOfUsers", service.findAll());
+		model.addAttribute("pageOfUsers", service.findAll(pageable));
 		return INDEX_URL;
 	}
 

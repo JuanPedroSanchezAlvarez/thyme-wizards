@@ -22,22 +22,23 @@
   								<thead>
 									<tr>
 										<th th:replace="fragments/table :: header(#{user.name})"></th>
-  										<th th:replace="fragments/table :: header(#{user.gender})"></th>
-  										<th th:replace="fragments/table :: header(#{user.birthday})"></th>
-  										<th th:replace="fragments/table :: header(#{user.email})"></th>
+  										<th th:replace="fragments/table :: header(title=#{user.gender}, hideOnMobile=true)"></th>
+  										<th th:replace="fragments/table :: header(title=#{user.birthday}, hideOnMobile=true)"></th>
+  										<th th:replace="fragments/table :: header(title=#{user.email}, hideOnMobile=true)"></th>
   										<th th:replace="fragments/table :: header('')"></th>
   									</tr>
 								</thead>
 								<tbody>
-									<tr class="bg-white" th:each="user : ${listOfUsers}">
-  										<td th:replace="fragments/table :: data(contents=${user.fullName},primary=true)"></td>
-  										<td th:replace="fragments/table :: data(${user.gender})"></td>
-  										<td th:replace="fragments/table :: data(${user.birthday})"></td>
-  										<td th:replace="fragments/table :: data(${user.email})"></td>
+									<tr class="bg-white" th:each="user : ${pageOfUsers}">
+  										<td th:replace="fragments/table :: data(contents=${user.fullName}, primary=true)"></td>
+  										<td th:replace="fragments/table :: data(contents=${user.gender}, hideOnMobile=true)"></td>
+  										<td th:replace="fragments/table :: data(contents=${user.birthday}, hideOnMobile=true)"></td>
+  										<td th:replace="fragments/table :: data(contents=${user.email}, hideOnMobile=true)"></td>
   										<td th:replace="fragments/table :: dataWithLink(#{edit}, '#')"></td>
   									</tr>
 								</tbody>
   							</table>
+  							<div th:replace="fragments/pagination :: controls(page=${pageOfUsers})"></div>
   						</div>
   					</div>
   				</div>

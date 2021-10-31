@@ -1,9 +1,10 @@
 package com.thymewizards.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +29,13 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<UserDTO> findAll() {
+	public Page<UserDTO> findAll(Pageable pageable) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
-		List<User> listEntity = (List<User>) repository.findAll();
-		List<UserDTO> listDTO = new ArrayList<>();
-		listEntity.forEach((entity) -> { listDTO.add(IUserMapper.INSTANCE.entityToDto(entity)); });
-		return listDTO;
+		Page<UserDTO> pageDTO = repository.findAll(pageable).map(new Function<User, UserDTO>() {
+		    @Override
+		    public UserDTO apply(User entity) { return IUserMapper.INSTANCE.entityToDto(entity); }
+		});
+		return pageDTO;
 	}
 
 	@Override
