@@ -62,4 +62,14 @@ public class UserServiceImpl implements IUserService {
 		return false;
 	}
 
+	@Override
+	public Boolean userNameAlreadyExists(String userName) {
+		return repository.existsByUserName(userName);
+	}
+
+	@Override
+	public Boolean emailAlreadyExists(String email) {
+		return repository.existsByEmail(email);
+	}
+
 }

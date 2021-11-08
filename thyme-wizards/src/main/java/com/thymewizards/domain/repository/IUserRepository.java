@@ -8,4 +8,7 @@ import com.thymewizards.domain.entity.User;
 
 public interface IUserRepository extends PagingAndSortingRepository<User, UUID> {
 
+	Boolean existsByUserName(String userName);
+	Boolean existsByEmail(String email);
+
 }
