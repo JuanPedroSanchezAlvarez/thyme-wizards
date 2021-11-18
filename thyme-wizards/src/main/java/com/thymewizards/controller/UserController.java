@@ -77,8 +77,8 @@ public class UserController {
         return EDIT_URL;
     }
 
-    @PostMapping(path = "/update")
-    public String update(@Validated(UpdateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
+    @PostMapping(path = "/{id}")
+    public String update(@PathVariable("id") UUID id, @Validated(UpdateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));

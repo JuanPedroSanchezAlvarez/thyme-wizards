@@ -16,7 +16,7 @@
 <!--   				</div> -->
 
 				<div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-					<form id="user-form" th:object="${user}" th:action="${editMode?.name() == 'UPDATE'} ? @{/users/update} : @{/users/create}" method="post">
+					<form id="user-form" th:object="${user}" th:action="${editMode?.name() == 'UPDATE'} ? @{/users/{id}(id=${user.id})} : @{/users/create}" method="post">
 
 						<div>
 
