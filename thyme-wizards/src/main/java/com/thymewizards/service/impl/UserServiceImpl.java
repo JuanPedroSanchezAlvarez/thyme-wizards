@@ -5,12 +5,14 @@ import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thymewizards.domain.entity.User;
 import com.thymewizards.domain.repository.IUserRepository;
 import com.thymewizards.dto.UserDTO;
+import com.thymewizards.exception.NotFoundException;
 import com.thymewizards.mapper.IUserMapper;
 import com.thymewizards.service.IUserService;
 import com.thymewizards.util.LoggingUtils;
@@ -41,7 +43,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDTO findById(UUID id) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
-		return IUserMapper.INSTANCE.entityToDto(repository.findById(id).orElse(null));
+		return IUserMapper.INSTANCE.entityToDto(repository.findById(id).orElseThrow(() -> new NotFoundException(id)));
 	}
 
 	@Override
@@ -70,6 +72,17 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public Boolean emailAlreadyExists(String email) {
 		return repository.existsByEmail(email);
+	}
+
+	@Override
+	@Transactional
+	public UserDTO update(UserDTO dto) {
+		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
+		User entity = repository.findById(dto.getId()).orElseThrow(() -> new NotFoundException(dto.getId()));
+		if (dto.getVersion() != entity.getVersion()) {
+			throw new ObjectOptimisticLockingFailureException(User.class, entity.getId().toString());
+		}
+		return IUserMapper.INSTANCE.entityToDto(repository.save(IUserMapper.INSTANCE.dtoToEntity(dto)));
 	}
 
 }

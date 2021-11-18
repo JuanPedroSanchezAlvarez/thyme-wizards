@@ -34,7 +34,7 @@
   										<td th:replace="fragments/table :: data(contents=${user.gender}, hideOnMobile=true)"></td>
   										<td th:replace="fragments/table :: data(contents=${user.birthday}, hideOnMobile=true)"></td>
   										<td th:replace="fragments/table :: data(contents=${user.email}, hideOnMobile=true)"></td>
-  										<td th:replace="fragments/table :: dataWithLink(#{edit}, '#')"></td>
+  										<td th:replace="fragments/table :: dataWithLink(#{edit}, @{'/users/' + ${user.id.toString()}})"></td>
   									</tr>
 								</tbody>
   							</table>

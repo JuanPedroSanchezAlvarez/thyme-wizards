@@ -20,8 +20,8 @@ public class EmailAlreadyExistsValidator implements ConstraintValidator<EmailAlr
 		// This method is not needed in this example. This is useful when your custom annotation has extra parameters you want to read out.
 	}
 
-	public boolean isValid(UserDTO formData, ConstraintValidatorContext context) {
-		if (userService.emailAlreadyExists(formData.getEmail())) {
+	public boolean isValid(UserDTO dto, ConstraintValidatorContext context) {
+		if (userService.emailAlreadyExists(dto.getEmail())) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("{EmailAlreadyExists}").addPropertyNode("email").addConstraintViolation();
 			return false;

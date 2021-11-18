@@ -1,6 +1,7 @@
 package com.thymewizards.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
@@ -10,14 +11,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.thymewizards.domain.entity.Gender;
 import com.thymewizards.dto.UserDTO;
 import com.thymewizards.service.IUserService;
+import com.thymewizards.util.EditMode;
+import com.thymewizards.util.Gender;
 import com.thymewizards.util.LoggingUtils;
-import com.thymewizards.validator.ValidationGroupSequence;
+import com.thymewizards.validator.CreateValidationGroupSequence;
+import com.thymewizards.validator.UpdateValidationGroupSequence;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,18 +52,46 @@ public class UserController {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		model.addAttribute("user", new UserDTO());
 		model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+		model.addAttribute("editMode", EditMode.CREATE);
 		return EDIT_URL;
 	}
 
 	@PostMapping(path = "/create")
-	public String save(@Validated(ValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
+	public String create(@Validated(CreateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+			model.addAttribute("editMode", EditMode.CREATE);
 			return EDIT_URL;
 		}
 		service.save(dto);
 		return REDIRECT_INDEX_URL;
 	}
+
+    @GetMapping(path = "/{id}")
+    public String updateForm(@PathVariable("id") UUID id, Model model) {
+    	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
+        model.addAttribute("user", service.findById(id));
+        model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+        model.addAttribute("editMode", EditMode.UPDATE);
+        return EDIT_URL;
+    }
+
+    @PostMapping(path = "/update")
+    public String update(@Validated(UpdateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
+    	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+            model.addAttribute("editMode", EditMode.UPDATE);
+            return EDIT_URL;
+        }
+        service.update(dto);
+        return REDIRECT_INDEX_URL;
+    }
+
+//    @GetMapping("/ex")
+//    public String throwException() {
+//    throw new RuntimeException("This is a fake exception for testing");
+//    }
 
 }

@@ -1,6 +1,7 @@
 CREATE TABLE users
 (
   id 			UUID 		NOT NULL,
+  version      	BIGINT  	NOT NULL,
   user_name 	VARCHAR(25) NOT NULL,
   first_name 	VARCHAR(25) NOT NULL,
   last_name 	VARCHAR(25) NOT NULL,

@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
-import com.thymewizards.domain.entity.Gender;
 import com.thymewizards.dto.UserDTO;
 import com.thymewizards.service.IUserService;
+import com.thymewizards.util.Gender;
 
 @Profile("init-db")
 @Component

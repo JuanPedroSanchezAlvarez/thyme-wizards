@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+
+import com.thymewizards.util.Gender;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

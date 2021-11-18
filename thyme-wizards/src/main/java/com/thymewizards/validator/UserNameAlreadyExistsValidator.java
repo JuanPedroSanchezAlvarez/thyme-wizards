@@ -20,8 +20,8 @@ public class UserNameAlreadyExistsValidator implements ConstraintValidator<UserN
 		// This method is not needed in this example. This is useful when your custom annotation has extra parameters you want to read out.
 	}
 
-	public boolean isValid(UserDTO formData, ConstraintValidatorContext context) {
-		if (userService.userNameAlreadyExists(formData.getUserName())) {
+	public boolean isValid(UserDTO dto, ConstraintValidatorContext context) {
+		if (userService.userNameAlreadyExists(dto.getUserName())) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("{UserNameAlreadyExists}").addPropertyNode("userName").addConstraintViolation();
 			return false;

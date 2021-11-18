@@ -9,5 +9,6 @@ public interface ICrudService<T, ID> {
 	T findById(ID id);
 	T save(T object);
 	Boolean deleteById(ID id);
+	T update(T object);
 
 }

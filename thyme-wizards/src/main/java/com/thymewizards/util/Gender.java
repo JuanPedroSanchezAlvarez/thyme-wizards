@@ -1,3 +1,3 @@
-package com.thymewizards.domain.entity;
+package com.thymewizards.util;
 
 public enum Gender { MALE, FEMALE, OTHER, UNKNOWN }

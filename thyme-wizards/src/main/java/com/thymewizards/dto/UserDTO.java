@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.thymewizards.domain.entity.Gender;
+import com.thymewizards.util.Gender;
 import com.thymewizards.validator.EmailAlreadyExists;
 import com.thymewizards.validator.UserNameAlreadyExists;
 import com.thymewizards.validator.ValidationGroupOne;
