@@ -8,7 +8,7 @@ public interface ICrudService<T, ID> {
 	Page<T> findAll(Pageable pageable);
 	T findById(ID id);
 	T save(T object);
-	Boolean deleteById(ID id);
+	void deleteById(ID id);
 	T update(T object);
 
 }

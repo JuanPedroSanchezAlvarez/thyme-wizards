@@ -55,13 +55,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public Boolean deleteById(UUID id) {
+	public void deleteById(UUID id) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
-		if (repository.existsById(id)) {
-			repository.deleteById(id);
-			return true;
-		}
-		return false;
+		repository.deleteById(id);
 	}
 
 	@Override
