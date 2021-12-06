@@ -1,6 +1,7 @@
 package com.thymewizards.dto;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.thymewizards.util.Gender;
+import com.thymewizards.util.UserRole;
 import com.thymewizards.validator.EmailAlreadyExists;
 import com.thymewizards.validator.UserNameAlreadyExists;
 import com.thymewizards.validator.ValidationGroupOne;
@@ -55,9 +57,14 @@ public class UserDTO extends BaseDTO {
 	@Pattern(regexp = "(^$|[0-9]{9})", groups = ValidationGroupOne.class)
 	private String phoneNumber;
 
+	@NotNull
+	private Set<UserRole> setOfRoles;
+
+	@NotBlank
+	private String password;
 
 	public String getFullName() {
-		return String.format("%s %s", firstName, lastName);
+		return String.format("%s %s", firstName, lastName).replace("'", "´");
 	}
 
 }

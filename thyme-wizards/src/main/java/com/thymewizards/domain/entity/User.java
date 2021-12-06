@@ -1,14 +1,18 @@
 package com.thymewizards.domain.entity;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.thymewizards.util.Gender;
+import com.thymewizards.util.UserRole;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,5 +44,13 @@ public class User extends BaseEntity {
 
 	@Column(length = 9, name = "phone_number")
 	private String phoneNumber;
+
+	@ElementCollection(targetClass = UserRole.class)
+	@Enumerated(value = EnumType.STRING)
+	@CollectionTable(name = "user_roles")
+	@Column(name = "role")
+	private Set<UserRole> setOfRoles;
+
+	private String password;
 
 }

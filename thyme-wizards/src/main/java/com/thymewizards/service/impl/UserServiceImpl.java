@@ -6,6 +6,7 @@ import java.util.function.Function;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements IUserService {
 
 	private final IUserRepository repository;
+	private final PasswordEncoder passwordEncoder;
 
-	public UserServiceImpl(IUserRepository repository) {
+	public UserServiceImpl(IUserRepository repository, PasswordEncoder passwordEncoder) {
 		this.repository = repository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -48,9 +51,12 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public UserDTO save(UserDTO o) {
+	public UserDTO save(UserDTO dto) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
-		return IUserMapper.INSTANCE.entityToDto(repository.save(IUserMapper.INSTANCE.dtoToEntity(o)));
+		// return IUserMapper.INSTANCE.entityToDto(repository.save(IUserMapper.INSTANCE.dtoToEntity(dto)));
+		User entity = IUserMapper.INSTANCE.dtoToEntity(dto);
+		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+		return IUserMapper.INSTANCE.entityToDto(repository.save(entity));
 	}
 
 	@Override

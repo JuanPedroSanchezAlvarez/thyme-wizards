@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 
 	<div th:fragment="menu" class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -29,9 +29,17 @@
 						x-transition:leave="transition ease-in duration-75 transform"
 						x-transition:leave-start="opacity-100 scale-100"
 						x-transition:leave-end="opacity-0 scale-95">
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+<!-- 						<div class="block px-4 pt-1 text-sm text-gray-700" sec:authentication="principal.displayName"></div> -->
+<!--                         <div class="block px-4 pb-2 text-xs font-mono text-gray-400 border-b truncate" sec:authentication="principal.username"></div> -->
+                        <div class="block px-4 pt-1 text-sm text-gray-700" sec:authentication="name"></div>
+                        <div class="block px-4 pb-2 text-xs font-mono text-gray-400 border-b truncate" sec:authentication="principal.authorities"></div>
+						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" th:text="#{menu.profile}"></a>
+						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" th:text="#{menu.settings}"></a>
+                        <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" th:text="#{menu.signout}"></button>
+                            </form>
+                        </div>
 					</div>
 				</div>
 			</div>

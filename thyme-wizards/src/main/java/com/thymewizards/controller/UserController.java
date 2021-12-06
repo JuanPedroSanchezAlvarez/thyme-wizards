@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,6 +51,7 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/create")
+	@Secured("ROLE_ADMIN")
 	public String createForm(Model model) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		model.addAttribute("user", new UserDTO());
@@ -59,6 +61,7 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/create")
+	@Secured("ROLE_ADMIN")
 	public String create(@Validated(CreateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		if (bindingResult.hasErrors()) {
@@ -80,6 +83,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/{id}")
+    @Secured("ROLE_ADMIN")
     public String update(@PathVariable("id") UUID id, @Validated(UpdateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
         if (bindingResult.hasErrors()) {
@@ -92,6 +96,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @Secured("ROLE_ADMIN")
     public String delete(@PathVariable("id") UUID id, RedirectAttributes redirectAttributes) {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
     	UserDTO dto = service.findById(id);

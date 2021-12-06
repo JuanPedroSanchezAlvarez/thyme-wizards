@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" th:with="activeMenuItem='users'">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" th:with="activeMenuItem='users'">
 <head>
 <title th:text="#{menu.users}"></title>
 </head>
@@ -7,7 +7,7 @@
 
 	<div layout:fragment="page-content">
 		<!-- tag::title[] -->
-    	<div th:replace="fragments/titles :: title-with-button(#{menu.users}, 'user-add', #{user.create}, @{/users/create})"></div>
+    	<div th:replace="fragments/titles :: title-with-button(#{menu.users}, 'user-add', #{user.create}, @{/users/create})" sec:authorize="hasRole('ADMIN')"></div>
     	<!-- end::title[] -->
     	<!-- tag::alert[] -->
     	<div th:if="${deletedUserName}">
@@ -30,8 +30,10 @@
   										<th th:replace="fragments/table :: header(title=#{user.gender}, hideOnMobile=true)"></th>
   										<th th:replace="fragments/table :: header(title=#{user.birthday}, hideOnMobile=true)"></th>
   										<th th:replace="fragments/table :: header(title=#{user.email}, hideOnMobile=true)"></th>
-  										<th th:replace="fragments/table :: header('')"></th>
-  										<th th:replace="fragments/table :: header('')"></th>
+  										<th:block sec:authorize="hasRole('ADMIN')">
+  											<th th:replace="fragments/table :: header('')"></th>
+  											<th th:replace="fragments/table :: header('')"></th>
+  										</th:block>
   									</tr>
 								</thead>
 								<tbody>
@@ -40,10 +42,12 @@
   										<td th:replace="fragments/table :: data(contents=${user.gender}, hideOnMobile=true)"></td>
   										<td th:replace="fragments/table :: data(contents=${user.birthday}, hideOnMobile=true)"></td>
   										<td th:replace="fragments/table :: data(contents=${user.email}, hideOnMobile=true)"></td>
-  										<td th:replace="fragments/table :: dataWithLink(#{edit}, @{'/users/' + ${user.id.toString()}})"></td>
-  										<td th:x-data="|{name: '${user.fullName}', deleteUrl: '/users/${user.id.toString()}'}|" class="px-6 py-4 whitespace-no-wrap text-right text-sm font-medium">
-                                    		<a href="javascript:void(0)" class="text-green-600 hover:text-green-900" @click="$dispatch('open-delete-modal', {name, deleteUrl})">Delete</a>
-                                		</td>
+  										<th:block sec:authorize="hasRole('ADMIN')">
+  											<td th:replace="fragments/table :: dataWithLink(#{edit}, @{'/users/' + ${user.id.toString()}})"></td>
+  											<td th:x-data="|{name: '${user.fullName}', deleteUrl: '/users/${user.id.toString()}'}|" class="px-6 py-4 whitespace-no-wrap text-right text-sm font-medium">
+                                    			<a href="javascript:void(0)" class="text-green-600 hover:text-green-900" @click="$dispatch('open-delete-modal', {name, deleteUrl})">Delete</a>
+                                			</td>
+                                		</th:block>
   									</tr>
 								</tbody>
   							</table>
@@ -143,7 +147,7 @@
             };
         }
     	</script>
-		<script th:replace="fragments/alerts :: success-js"></script>
+		<script th:replace="fragments/alerts :: alert-js"></script>
 	</th:block>
 
 </body>
