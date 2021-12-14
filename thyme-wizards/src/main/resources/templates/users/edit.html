@@ -29,6 +29,15 @@
 								<input type="hidden" th:field="*{version}" th:if="${editMode?.name() == 'UPDATE'}">
 								<!-- end::id+version[] -->
 
+                            	<!-- tag::userRole[] -->
+                            	<div class="sm:col-span-2">
+                                	<label for="userRole" class="block text-sm font-medium text-gray-700" th:text="#{user.userRole}"></label>
+                                	<select id="userRole" class="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md" th:field="*{userRole}">
+                                    	<option th:each="role : ${listOfRoles}" th:text="#{'UserRole.' + ${role.name()}}" th:value="${role.name()}"></option>
+                                	</select>
+                            	</div>
+                            	<!-- end::userRole[] -->
+
 								<!-- tag::gender[] -->
 								<div class="sm:col-span-6">
 									<label class="block text-sm font-medium text-gray-700" th:text="#{user.gender}"></label>
@@ -47,6 +56,10 @@
                             	<div th:replace="fragments/forms :: textinput(#{user.lastName}, 'lastName', 'sm:col-span-3')"></div>
                             	<div th:replace="fragments/forms :: textinput(#{user.userName}, 'userName', 'sm:col-span-3')"></div>
                             	<div th:replace="fragments/forms :: textinput(labelText=#{user.email}, fieldName='email', cssClass='sm:col-span-4', inputType='email')"></div>
+                            	<th:block th:if="${editMode?.name() == 'CREATE'}">
+                                	<div th:replace="fragments/forms :: textinput(labelText=#{user.password}, fieldName='password', cssClass='sm:col-span-4', inputType='password')"></div>
+                                	<div th:replace="fragments/forms :: textinput(labelText=#{user.password.repeated}, fieldName='passwordRepeated', cssClass='sm:col-span-4', inputType='password')"></div>
+                            	</th:block>
                             	<div th:replace="fragments/forms :: textinput(#{user.phoneNumber}, 'phoneNumber', 'sm:col-span-4')"></div>
                             	<div class="sm:col-span-2"></div>
                             	<div th:replace="fragments/forms :: textinput(labelText=#{user.birthday}, fieldName='birthday', cssClass='sm:col-span-2', placeholder=#{user.birthday.placeholder})"></div>

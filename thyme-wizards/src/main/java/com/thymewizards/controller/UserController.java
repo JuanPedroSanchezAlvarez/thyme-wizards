@@ -23,6 +23,7 @@ import com.thymewizards.service.IUserService;
 import com.thymewizards.util.EditMode;
 import com.thymewizards.util.Gender;
 import com.thymewizards.util.LoggingUtils;
+import com.thymewizards.util.UserRole;
 import com.thymewizards.validator.CreateValidationGroupSequence;
 import com.thymewizards.validator.UpdateValidationGroupSequence;
 
@@ -56,6 +57,7 @@ public class UserController {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		model.addAttribute("user", new UserDTO());
 		model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+		model.addAttribute("listOfRoles", List.of(UserRole.values()));
 		model.addAttribute("editMode", EditMode.CREATE);
 		return EDIT_URL;
 	}
@@ -66,6 +68,7 @@ public class UserController {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+			model.addAttribute("listOfRoles", List.of(UserRole.values()));
 			model.addAttribute("editMode", EditMode.CREATE);
 			return EDIT_URL;
 		}
@@ -78,6 +81,7 @@ public class UserController {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
         model.addAttribute("user", service.findById(id));
         model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+        model.addAttribute("listOfRoles", List.of(UserRole.values()));
         model.addAttribute("editMode", EditMode.UPDATE);
         return EDIT_URL;
     }
@@ -88,6 +92,7 @@ public class UserController {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
+            model.addAttribute("listOfRoles", List.of(UserRole.values()));
             model.addAttribute("editMode", EditMode.UPDATE);
             return EDIT_URL;
         }

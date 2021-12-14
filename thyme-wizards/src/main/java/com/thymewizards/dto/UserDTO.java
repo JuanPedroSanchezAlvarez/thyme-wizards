@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.thymewizards.util.Gender;
 import com.thymewizards.util.UserRole;
 import com.thymewizards.validator.EmailAlreadyExists;
+import com.thymewizards.validator.PasswordsMatch;
 import com.thymewizards.validator.UserNameAlreadyExists;
 import com.thymewizards.validator.ValidationGroupOne;
 import com.thymewizards.validator.ValidationGroupTwo;
@@ -26,6 +27,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @UserNameAlreadyExists(groups = ValidationGroupTwo.class)
 @EmailAlreadyExists(groups = ValidationGroupTwo.class)
+@PasswordsMatch(groups = ValidationGroupTwo.class)
 public class UserDTO extends BaseDTO {
 
 	@NotBlank
@@ -62,6 +64,9 @@ public class UserDTO extends BaseDTO {
 
 	@NotBlank
 	private String password;
+
+	@NotBlank
+	private String passwordRepeated;
 
 	public String getFullName() {
 		return String.format("%s %s", firstName, lastName).replace("'", "´");

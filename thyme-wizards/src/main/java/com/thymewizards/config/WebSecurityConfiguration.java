@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -13,15 +14,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	  private final PasswordEncoder passwordEncoder;
+	  private final UserDetailsService userDetailsService;
 
-	  public WebSecurityConfiguration(PasswordEncoder passwordEncoder) {
+	  public WebSecurityConfiguration(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
 		  this.passwordEncoder = passwordEncoder;
+		  this.userDetailsService = userDetailsService;
 	  }
 
 	  @Override
 	  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		  auth.inMemoryAuthentication().withUser("user").password(passwordEncoder.encode("verysecure")).roles("USER")
-		  		.and().withUser("admin").password(passwordEncoder.encode("evenmoresecure")).roles("USER", "ADMIN");
+		  //auth.inMemoryAuthentication().withUser("user").password(passwordEncoder.encode("verysecure")).roles("USER")
+		  //		.and().withUser("admin").password(passwordEncoder.encode("evenmoresecure")).roles("USER", "ADMIN");
+		  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	  }
 
 	  @Override
