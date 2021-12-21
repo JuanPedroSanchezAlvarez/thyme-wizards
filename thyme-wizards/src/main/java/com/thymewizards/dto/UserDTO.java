@@ -62,10 +62,10 @@ public class UserDTO extends BaseDTO {
 	@NotNull
 	private Set<UserRole> setOfRoles;
 
-	@NotBlank
+	@NotBlank(groups = ValidationGroupTwo.class)
 	private String password;
 
-	@NotBlank
+	@NotBlank(groups = ValidationGroupTwo.class)
 	private String passwordRepeated;
 
 	public String getFullName() {
