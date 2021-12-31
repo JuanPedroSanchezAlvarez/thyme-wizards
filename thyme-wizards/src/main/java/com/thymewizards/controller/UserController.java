@@ -108,12 +108,12 @@ public class UserController {
 //    }
 
     @ModelAttribute("listOfGenders")
-    public List<Gender> genders() {
+    public List<Gender> getListOfGenders() {
     	return List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER);
     }
 
     @ModelAttribute("listOfRoles")
-    public List<UserRole> possibleRoles() {
+    public List<UserRole> getListOfRoles() {
     	return List.of(UserRole.values());
     }
 
