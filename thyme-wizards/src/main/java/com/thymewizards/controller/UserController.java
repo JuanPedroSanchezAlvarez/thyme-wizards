@@ -56,8 +56,6 @@ public class UserController {
 	public String createForm(Model model) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		model.addAttribute("user", new UserDTO());
-		model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
-		model.addAttribute("listOfRoles", List.of(UserRole.values()));
 		model.addAttribute("editMode", EditMode.CREATE);
 		return EDIT_URL;
 	}
@@ -67,8 +65,6 @@ public class UserController {
 	public String create(@Validated(CreateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
 		log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
-			model.addAttribute("listOfRoles", List.of(UserRole.values()));
 			model.addAttribute("editMode", EditMode.CREATE);
 			return EDIT_URL;
 		}
@@ -80,8 +76,6 @@ public class UserController {
     public String updateForm(@PathVariable("id") UUID id, Model model) {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
         model.addAttribute("user", service.findById(id));
-        model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
-        model.addAttribute("listOfRoles", List.of(UserRole.values()));
         model.addAttribute("editMode", EditMode.UPDATE);
         return EDIT_URL;
     }
@@ -91,8 +85,6 @@ public class UserController {
     public String update(@PathVariable("id") UUID id, @Validated(UpdateValidationGroupSequence.class) @ModelAttribute("user") UserDTO dto, BindingResult bindingResult, Model model) {
     	log.debug("LOG: Class: " + this.getClass().getName() + " --> Method: " + LoggingUtils.getCurrentMethodName());
         if (bindingResult.hasErrors()) {
-            model.addAttribute("listOfGenders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
-            model.addAttribute("listOfRoles", List.of(UserRole.values()));
             model.addAttribute("editMode", EditMode.UPDATE);
             return EDIT_URL;
         }
@@ -114,5 +106,15 @@ public class UserController {
 //    public String throwException() {
 //    throw new RuntimeException("This is a fake exception for testing");
 //    }
+
+    @ModelAttribute("listOfGenders")
+    public List<Gender> genders() {
+    	return List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER);
+    }
+
+    @ModelAttribute("listOfRoles")
+    public List<UserRole> possibleRoles() {
+    	return List.of(UserRole.values());
+    }
 
 }
